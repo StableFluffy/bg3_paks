@@ -130,9 +130,9 @@ if ($bg3Path) {
                 Copy-WithBackup -Source $_.FullName -Destination $destinationPath
             }
         }
-        Write-Host "한글패치가 완료되었습니다." -ForegroundColor Green
+        Write-Host "Korean Patch Done!" -ForegroundColor Green
     } else {
-        Write-Error "패치파일을 찾을 수 없습니다. 압축을 해제한 후 실행해주세요."
+        Write-Error "Cannot Find Patchfile Please Uncompress file first."
     }
 }
 Remove-Item -Path patcher.ps1
