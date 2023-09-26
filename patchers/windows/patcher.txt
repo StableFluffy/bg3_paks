@@ -130,9 +130,9 @@ if ($bg3Path) {
                 Copy-WithBackup -Source $_.FullName -Destination $destinationPath
             }
         }
-        Write-Output "Patch completed. Balkkiyathou~!!!"
+        Write-Host "한글패치가 완료되었습니다." -ForegroundColor Green
     } else {
-        Write-Error "Patch file does not exist."
+        Write-Error "패치파일을 찾을 수 없습니다. 압축을 해제한 후 실행해주세요."
     }
 }
 Remove-Item -Path patcher.ps1
