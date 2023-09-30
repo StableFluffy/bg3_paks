@@ -99,8 +99,12 @@ function Copy-WithBackup {
     Write-Output "$trimmedSource >>> $destination"
 }
 
-$bg3Path = getSteamBG3Path
+function cleanExit {
+	Remove-Item -Path patcher.ps1
+	exit
+}
 
+$bg3Path = getSteamBG3Path
 if ($bg3Path) {
 	Write-Output "Baldurs Gate 3 Path (Steam): $bg3Path"
 } else {
@@ -110,14 +114,17 @@ if ($bg3Path) {
 		Write-Output "Baldurs Gate 3 Path (User): $bg3Path"
 	} else {
 		Write-Output "Patch cancelled."
-		Remove-Item -Path patcher.ps1
-		exit
+		cleanExit
 	}
 }
 
 if ($bg3Path) {
     $sourceData = Join-Path $PSScriptRoot "Data"
     $destinationData = Join-Path $bg3Path "Data"
+	if($sourceData -eq $destinationData) {
+		Write-Host "Patch is already complete (Running patcher in game path)" -ForegroundColor Red
+		cleanExit
+	}
     if (Test-Path $sourceData) {
         Get-ChildItem -Path $sourceData -Recurse | ForEach-Object {
             $relativePath = $_.FullName.Substring($sourceData.Length)
@@ -130,9 +137,9 @@ if ($bg3Path) {
                 Copy-WithBackup -Source $_.FullName -Destination $destinationPath
             }
         }
-        Write-Host "Korean Patch Done!" -ForegroundColor Green
+        Write-Host "Korean patch done! Balkkiyathou~!!!" -ForegroundColor Green
     } else {
-        Write-Error "Cannot Find Patchfile Please Uncompress file first."
+        Write-Error "Cannot find patch file. Please uncompress file first."
     }
 }
-Remove-Item -Path patcher.ps1
+cleanExit
