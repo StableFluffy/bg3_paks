@@ -6,6 +6,9 @@ for /f "skip=%StartLine% delims=" %%i in ('type "%~0"') do (
     echo %%i >> patcher.ps1
 )
 
+echo This automatic patcher may fail depending on your system environment.
+echo If an error occurs, please manually paste the patch file into the game directory.
+echo:
 powershell.exe -ExecutionPolicy Bypass -File patcher.ps1
 pause
 goto :eof
@@ -100,31 +103,31 @@ function Copy-WithBackup {
 }
 
 function cleanExit {
-	Remove-Item -Path patcher.ps1
-	exit
+    Remove-Item -Path patcher.ps1
+    exit
 }
 
 $bg3Path = getSteamBG3Path
 if ($bg3Path) {
-	Write-Output "Baldurs Gate 3 Path (Steam): $bg3Path"
+    Write-Output "Baldurs Gate 3 Path (Steam): $bg3Path"
 } else {
-	Write-Output "Please select the folder where Baldurs Gate 3 is installed."
-	$bg3Path = getUserBG3Path
-	if($bg3Path) {
-		Write-Output "Baldurs Gate 3 Path (User): $bg3Path"
-	} else {
-		Write-Output "Patch cancelled."
-		cleanExit
-	}
+    Write-Output "Please select the folder where Baldurs Gate 3 is installed."
+    $bg3Path = getUserBG3Path
+    if($bg3Path) {
+        Write-Output "Baldurs Gate 3 Path (User): $bg3Path"
+    } else {
+        Write-Output "Patch cancelled."
+        cleanExit
+    }
 }
 
 if ($bg3Path) {
     $sourceData = Join-Path $PSScriptRoot "Data"
     $destinationData = Join-Path $bg3Path "Data"
-	if($sourceData -eq $destinationData) {
-		Write-Host "Patch is already complete (Running patcher in game path)" -ForegroundColor Red
-		cleanExit
-	}
+    if($sourceData -eq $destinationData) {
+        Write-Host "Patch is already complete (Running patcher in game path)" -ForegroundColor Red
+        cleanExit
+    }
     if (Test-Path $sourceData) {
         Get-ChildItem -Path $sourceData -Recurse | ForEach-Object {
             $relativePath = $_.FullName.Substring($sourceData.Length)
