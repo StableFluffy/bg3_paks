@@ -1,0 +1,19 @@
+{
+  "timestamp": "2023-11-22T17:00:40.766699+09:00",
+  "stats": {
+    "total": 206092,
+    "translated": 150259
+  },
+  "locafiles": [
+    "ai_korean.loca",
+    "ai_korean_rating.loca",
+    "ai_korean_we.loca",
+    "ai_korean_we_rating.loca",
+    "deepl_korean.loca",
+    "deepl_korean_rating.loca",
+    "deepl_korean_we.loca",
+    "deepl_korean_we_rating.loca",
+    "human_korean.loca",
+    "human_korean_rating.loca"
+  ]
+}
